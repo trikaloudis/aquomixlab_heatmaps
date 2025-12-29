@@ -5,3 +5,4 @@ You can apply log10 transformation and/or normalization (center scaling).
 Select your favorite color palette.
 Suports svg (vector), pdf (vector) and png exports.
 An example csv file with data is available in this folder. 
+Hint: Make sure you select the right columns and you don't have duplicate columns selected.
