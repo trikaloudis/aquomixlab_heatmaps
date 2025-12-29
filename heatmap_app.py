@@ -10,19 +10,24 @@ st.set_page_config(page_title="Metabolomics Heatmap Visualizer", layout="wide")
 def main():
     st.title("🧪 Metabolomics Heatmap Visualizer")
     st.markdown("""
-    Upload your metabolomics CSV file, map the columns, and customize your visualization.
+    Upload your metabolomics **CSV** or **Excel** file, map the columns, and customize your visualization.
     This app supports log transformation, normalization, and **vector graphics export (SVG/PDF)**.
     """)
 
     # Sidebar for Configuration
     st.sidebar.header("1. Data Upload")
-    uploaded_file = st.sidebar.file_uploader("Upload your CSV file", type=["csv"])
+    uploaded_file = st.sidebar.file_uploader("Upload your file", type=["csv", "xlsx", "xls"])
 
     if uploaded_file is not None:
         try:
-            # Load data
-            df = pd.read_csv(uploaded_file)
-            st.sidebar.success("File uploaded successfully!")
+            # Load data based on file extension
+            if uploaded_file.name.endswith('.csv'):
+                df = pd.read_csv(uploaded_file)
+            else:
+                # For Excel files, read the first sheet by default
+                df = pd.read_excel(uploaded_file)
+                
+            st.sidebar.success(f"Loaded: {uploaded_file.name}")
 
             # 2. Column Selection
             st.sidebar.header("2. Column Mapping")
@@ -130,11 +135,10 @@ def main():
         except Exception as e:
             st.error(f"Critical Error: {e}")
     else:
-        st.info("Welcome! Please upload your metabolomics CSV file in the sidebar to begin.")
+        st.info("Welcome! Please upload your metabolomics CSV or Excel file in the sidebar to begin.")
 
     # Sidebar Footer (Logo and Website)
     st.sidebar.markdown("---")
-    # Using the raw URL for the logo so it renders properly in Streamlit
     logo_url = "https://raw.githubusercontent.com/trikaloudis/aquomixlab_heatmaps/main/Aquomixlab%20Logo%20v2%20white%20font.jpg"
     st.sidebar.image(logo_url, use_container_width=True)
     st.sidebar.markdown(
