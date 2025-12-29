@@ -4,3 +4,4 @@ The file may contain any columns you wish. The app will ask you to select an "id
 You can apply log10 transformation and/or normalization (center scaling).
 Select your favorite color palette.
 Suports svg (vector), pdf (vector) and png exports.
+An example csv file with data is available in this folder. 
